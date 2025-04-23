@@ -13,6 +13,7 @@ Open Box is a file encryption, decryption and hashing ecosystem that provides se
 ### Building
 The project uses the no build philosophy, and as such it uses tsoding's [nob.h](https://github.com/tsoding/nob.h) implementation. To build the project you have to run:
 ```sh
+$ gcc -o build nob.c
 $ ./build
 ```
 in the root directory of the project. And running the project means running one of the executables built into the ./target/ folder. For example, running the server is as easy as running the following command (after building the project):
