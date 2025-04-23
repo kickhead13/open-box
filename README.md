@@ -2,7 +2,7 @@
 
 ### Description
 
-Open Box is a file encryption, decryption and hashing that provides server, user and administration tools. It allows setting up a server handling client file encryption requests. It has support for modern and classic encryption algorithms such as:
+Open Box is a file encryption, decryption and hashing ecosystem that provides server, user and administration tools. It allows setting up a server handling client file encryption/hashing requests. It has support for modern and classic encryption/hashing algorithms such as:
   - AES
   - RSA
   - TWOFISH
