@@ -1,7 +1,7 @@
 #ifndef __EXECUTIONER_THREAD
 #define __EXECUTIONER_THREAD
-#include "../shared/crypto.h"
-#include "../shared/utils.h"
+#include "../shared/crypto.h"   /* everything crypto related */
+#include "../shared/utils.h"    /* enum alg,                 */
 
 /* Data for the executioner thread. */
 struct executioner_thread_data {};
@@ -15,13 +15,6 @@ struct executioner_thread_data {};
  *  - unlocks BOXFILE and goes back to sleep
  * */
 void ethread(void*);
-
-struct eorder_t {
-  enum alg         alg;   /* Algorithm (shared/utils.h) */
-  char            *key;   /* Key for algorithm to use.  */
-  unsigned int   enc:1;   /* Encryption / Decryption bit. */
-  char             *fn;   /* Filename of file to be encrypted/decrypted/hashed  */
-};
 
 /* Given a BOXFILE file descriptor, returns a execution order.
  * I.E. it reads and discards one of the lines of the BOXFILE,
@@ -39,5 +32,7 @@ struct eorder_t next_eorder(size_t);
  * RETURN VALUE: 0 on success, -1 on failure 
  * */
 int8_t exec_order(struct eorder_t);
+
+
 
 #endif

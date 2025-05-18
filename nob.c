@@ -2,8 +2,12 @@
 #define NOB_STRIP_PREFIX
 #include "nob.h"
 
-#define BUILD_FOLDER "target/"
 #define SRC_FOLDER "src/"
+#ifndef INSTALL_FOLDER
+#define BUILD_FOLDER "target/"
+#else 
+#define BUILD_FOLDER INSTALL_FOLDER
+#endif
 
 int main(int argc, char **argv)
 {
@@ -15,13 +19,21 @@ int main(int argc, char **argv)
     if (!mkdir_if_not_exists(BUILD_FOLDER)) return 1;
 
     // Spawn three async processes collecting them to procs dynamic array
-    cmd_append(&cmd, "cc", "-o", BUILD_FOLDER"server", SRC_FOLDER"server.c", SRC_FOLDER"server/ethread.c", SRC_FOLDER"shared/crypto.c", "-lnettle");
+#ifdef INSTALL_FOLDER 
+    cmd_append(&cmd, "cc", "-DINSTALL_FOLDER=\""BUILD_FOLDER"\"", "-o", BUILD_FOLDER"openbox", SRC_FOLDER"openbox.c");
+#else 
+    cmd_append(&cmd, "cc", "-o", BUILD_FOLDER"openbox", SRC_FOLDER"openbox.c");
+#endif
     da_append(&procs, cmd_run_async_and_reset(&cmd));
-    cmd_append(&cmd, "cc", "-o", BUILD_FOLDER"uclient", SRC_FOLDER"uclient.c");
+    cmd_append(&cmd, "cc", "-o",
+      BUILD_FOLDER"openbox_server", SRC_FOLDER"server.c", SRC_FOLDER"server/ethread.c", SRC_FOLDER"shared/crypto.c", SRC_FOLDER"shared/utils.c",
+      "-lnettle", "-lpthread");
     da_append(&procs, cmd_run_async_and_reset(&cmd));
-    cmd_append(&cmd, "cc", "-o", BUILD_FOLDER"aclient", SRC_FOLDER"aclient.c");
+    cmd_append(&cmd, "cc", "-o", BUILD_FOLDER"openbox_client", SRC_FOLDER"uclient.c");
     da_append(&procs, cmd_run_async_and_reset(&cmd));
-    cmd_append(&cmd, "cc", "-o", BUILD_FOLDER"webapi", SRC_FOLDER"webapi.c");
+    cmd_append(&cmd, "cc", "-o", BUILD_FOLDER"openbox_admin", SRC_FOLDER"aclient.c");
+    da_append(&procs, cmd_run_async_and_reset(&cmd));
+    cmd_append(&cmd, "cc", "-o", BUILD_FOLDER"openbox_webapi", SRC_FOLDER"webapi.c");
     da_append(&procs, cmd_run_async_and_reset(&cmd));
     
         // Wait on all the async processes to finish

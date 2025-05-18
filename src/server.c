@@ -28,11 +28,26 @@
 #include <sys/socket.h>
 #include <unistd.h>
 #include <pthread.h>
+#include <fcntl.h>
 
 #include "server/ethread.h"
-
+#include "shared/o_error.h"
+#include "shared/utils.h"
 
 int main() {
-  write(1, "hello\n", 6);
+  
+  if(open(BOXFILE_NAME, O_CREAT | O_APPEND, S_IRWXU | S_IRWXG | S_IRWXO) != 3) {
+    __ERROR(FAILED_TO_OPEN_BOXFILE_ERROR);
+    return -1;
+  }
+  
+  if(open(CRYPTFILE_NAME, O_CREAT | O_APPEND, S_IRWXU | S_IRWXG | S_IRWXO) != 4) {
+    __ERROR(FAILED_TO_OPEN_CRYPTFILE_ERROR);
+    return -2;
+  }
+
+  write_order_to_box("testasd");
+  close(BOXFILE_FD);
+  close(CRYPTFILE_FD);
   return 0;
 }
