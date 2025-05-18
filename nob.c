@@ -26,8 +26,8 @@ int main(int argc, char **argv)
 #endif
     da_append(&procs, cmd_run_async_and_reset(&cmd));
     cmd_append(&cmd, "cc", "-o",
-      BUILD_FOLDER"openbox_server", SRC_FOLDER"server.c", SRC_FOLDER"server/ethread.c", SRC_FOLDER"shared/crypto.c", SRC_FOLDER"shared/utils.c",
-      "-lnettle", "-lpthread");
+      BUILD_FOLDER"openbox_server", SRC_FOLDER"server.c", SRC_FOLDER"server/ethread.c", SRC_FOLDER"shared/rsa.c", SRC_FOLDER"shared/utils.c", SRC_FOLDER"shared/des.c"
+      ,"-lgmp","-lnettle", "-lpthread");
     da_append(&procs, cmd_run_async_and_reset(&cmd));
     cmd_append(&cmd, "cc", "-o", BUILD_FOLDER"openbox_client", SRC_FOLDER"uclient.c");
     da_append(&procs, cmd_run_async_and_reset(&cmd));

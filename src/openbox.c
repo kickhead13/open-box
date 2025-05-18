@@ -58,5 +58,5 @@ int main(int argc, char *const *restrict argv) {
   ostrcat(path, args[0]);
 
   execvp(path,args);
-  return -1;
+  return help();
 }
