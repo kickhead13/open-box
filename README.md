@@ -22,3 +22,7 @@ in the root directory of the project. This will compile two executables "debug" 
 $ openbox server
 ```
 
+### Dependencies
+Openbox has the following dependencies:
+ - libgmp (for RSA implementation) [ubuntu](https://installati.one/install-libgmp-dev-ubuntu-22-04/), [gentoo](https://packages.gentoo.org/packages/dev-libs/gmp), [arch](https://archlinux.org/packages/core/x86_64/gmp/), [build from source](https://gmplib.org/manual/Installing-GMP)
+ - libnettle (for other encryption algorithms) [ubuntu](https://installati.one/install-libnettle7-ubuntu-20-04/), [gentoo](https://packages.gentoo.org/packages/dev-libs/nettle), [arch](https://archlinux.org/packages/core/x86_64/nettle/)
